@@ -66,13 +66,15 @@ public class NewTableDialog extends javax.swing.JDialog {
         moveUpButton = new javax.swing.JButton();
         moveDownButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setModal(true);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(440, 300));
+        setPreferredSize(new java.awt.Dimension(440, 340));
         setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -100,7 +102,7 @@ public class NewTableDialog extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tableOfHeaders);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 10, 380, 240);
+        jScrollPane1.setBounds(10, 50, 380, 240);
 
         addRowBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Add.png"))); // NOI18N
         addRowBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +111,7 @@ public class NewTableDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(addRowBtn);
-        addRowBtn.setBounds(400, 40, 30, 30);
+        addRowBtn.setBounds(400, 80, 30, 30);
 
         confirmBtn.setText("Confirm");
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +120,7 @@ public class NewTableDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(confirmBtn);
-        confirmBtn.setBounds(220, 260, 100, 30);
+        confirmBtn.setBounds(220, 300, 100, 30);
 
         cancelBtn.setText("Cancel");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +129,7 @@ public class NewTableDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancelBtn);
-        cancelBtn.setBounds(330, 260, 100, 30);
+        cancelBtn.setBounds(330, 300, 100, 30);
 
         removeRowBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Remove.png"))); // NOI18N
         removeRowBtn.setEnabled(false);
@@ -137,8 +139,9 @@ public class NewTableDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(removeRowBtn);
-        removeRowBtn.setBounds(400, 80, 30, 30);
+        removeRowBtn.setBounds(400, 120, 30, 30);
 
+        moveUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Up.png"))); // NOI18N
         moveUpButton.setEnabled(false);
         moveUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,8 +149,9 @@ public class NewTableDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(moveUpButton);
-        moveUpButton.setBounds(400, 120, 30, 30);
+        moveUpButton.setBounds(400, 160, 30, 30);
 
+        moveDownButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Down.png"))); // NOI18N
         moveDownButton.setEnabled(false);
         moveDownButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,11 +159,17 @@ public class NewTableDialog extends javax.swing.JDialog {
             }
         });
         getContentPane().add(moveDownButton);
-        moveDownButton.setBounds(400, 160, 30, 30);
+        moveDownButton.setBounds(400, 200, 30, 30);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102)));
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 440, 300);
+        jPanel1.setBounds(0, 40, 440, 300);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Headers");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(7, 5, 430, 30);
 
         pack();
         setLocationRelativeTo(null);
@@ -328,6 +338,7 @@ public class NewTableDialog extends javax.swing.JDialog {
     private javax.swing.JButton addRowBtn;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton confirmBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton moveDownButton;

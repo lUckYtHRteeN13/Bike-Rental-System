@@ -99,7 +99,7 @@ public class AddDataDialog extends javax.swing.JDialog {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Add Data");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(10, 20, 450, 30);
+        jLabel7.setBounds(10, 20, 550, 30);
 
         addRow.setText("ADD");
         addRow.addActionListener(new java.awt.event.ActionListener() {

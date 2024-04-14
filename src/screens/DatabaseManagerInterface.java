@@ -7,6 +7,9 @@ package screens;
 import filemanagement.FileManager;
 import java.awt.Component;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.Box;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -154,6 +158,7 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
         getContentPane().add(removeBtn);
         removeBtn.setBounds(690, 100, 30, 30);
 
+        editContentBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Edit.png"))); // NOI18N
         editContentBtn.setEnabled(false);
         editContentBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,7 +231,7 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void setData( Object[][] data ) {
         
         this.data.clear();
@@ -264,19 +269,10 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
         String title = "";
         
         System.out.println(e.getType());
-        if ( (!this.SEARCHING && !this.LOADING) || this.ADDING ) {
-            
-            title = String.format(
-                "<html><div style='text-align: center;'><I>* %s</I></div></html>",
-                this.fileManager.getFile().getName());
-            this.is_unsaved = true;
-            
-        } else {
-            
-            title = this.titleLabel.getText();
-            
-        }
-        
+        System.out.println(this.SEARCHING);
+        System.out.println(this.LOADING);
+        System.out.println(this.ADDING);
+                
         switch (e.getType()) {
             case TableModelEvent.UPDATE:
                 this.addRow.setEnabled(true);
@@ -290,10 +286,35 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
                 break;
             
             case TableModelEvent.INSERT:
+                this.is_unsaved = (!this.SEARCHING && !this.LOADING) || this.ADDING;
+                if ( this.is_unsaved ) {
+            
+                    title = String.format(
+                            "<html><div style='text-align: center;'><I>* %s</I></div></html>",
+                            this.fileManager.getFile().getName());
+
+                    } else {
+
+                        title = this.titleLabel.getText();
+
+                    }
+                
                 this.titleLabel.setText(title);
                 break;
                 
             case TableModelEvent.DELETE:
+                this.is_unsaved = (!this.SEARCHING && !this.LOADING) || this.ADDING;
+                if ( this.is_unsaved ) {
+            
+                    title = String.format(
+                            "<html><div style='text-align: center;'><I>* %s</I></div></html>",
+                            this.fileManager.getFile().getName());
+
+                    } else {
+
+                        title = this.titleLabel.getText();
+
+                    }
                 this.titleLabel.setText(title);                
                 break;
                 
@@ -349,13 +370,13 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
         
     }
     
-    private void save() {
+    private int save() {
         
-        this.save(false);
+        return this.save(false);
         
     }
     
-    private void save(boolean saveas) {
+    private int save(boolean saveas) {
                 
         String dataToSave;
 
@@ -388,6 +409,8 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
                 this.fileManager.save(dataToSave);
                 this.titleLabel.setText(this.file.getName());
                 this.is_unsaved = false;
+            } else {
+                return -1;
             }
             
         } else {
@@ -395,7 +418,7 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
             this.is_unsaved = false;
         }
         this.titleLabel.setText(this.fileManager.getFile().getName());
-        
+        return 0;
     }
     
     private void open_file() {
@@ -406,11 +429,17 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
         String[] rows;
         String[][] data;
         File selectedFile;
+        int choice;
         
-        this.fileChooser.showOpenDialog(this);
+        choice = this.fileChooser.showOpenDialog(this);
         selectedFile = this.fileChooser.getSelectedFile();
+        System.out.println(choice);
+        System.out.println(selectedFile);
+        if (!selectedFile.exists()) {
+            JOptionPane.showMessageDialog(this, "File doesn't exist.", "File Error", JOptionPane.ERROR_MESSAGE);
+        }
 
-        if (null != selectedFile) {
+        if (selectedFile.exists() && choice == 0) {
 
             for (int win_index = 1; win_index < windows.length; win_index++) {
                 windows[win_index].dispose();
@@ -436,11 +465,10 @@ public class DatabaseManagerInterface extends javax.swing.JFrame {
 
             this.saveAsBtn.setEnabled(true);
             this.saveBtn.setEnabled(true);
+            this.is_unsaved = false;
         }
 
         this.LOADING = false;
-        this.is_unsaved = false;
-        
     }
     
     private void new_file() {

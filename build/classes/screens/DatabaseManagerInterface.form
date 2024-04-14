@@ -178,6 +178,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="editContentBtn">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/imgs/Edit.png"/>
+        </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
